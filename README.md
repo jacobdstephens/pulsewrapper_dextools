@@ -5,8 +5,8 @@ This project is a simple React application that allows users to wrap and unwrap 
 ## Features
 
 - Connect to a wallet using RainbowKit.
-- Wrap ETH to WETH.
-- Unwrap WETH to ETH.
+- Wrap PLS to WETH.
+- Unwrap WETH to PLS.
 - Display current PLS and WETH prices.
 - View a DEXTools chart for the PLS/WETH pair.
 - Toggle between light and dark mode.
