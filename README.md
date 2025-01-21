@@ -1,6 +1,6 @@
 # Pulse Wrapper
 
-This project is a simple React application that allows users to wrap and unwrap ETH on the PulseChain network. It also displays the current price of PLS and WETH.
+This project is a simple React application that allows users to wrap and unwrap PLS to WETH on the PulseChain network.
 
 ## Features
 
