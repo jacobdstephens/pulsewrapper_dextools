@@ -17,7 +17,7 @@ const PairData = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          'https://api.dexscreener.com/latest/dex/pairs/pulsechain/0x6b7a5b3754c15b8948f8c100b626b844ab6b44b5'
+          'https://api.dexscreener.com/latest/dex/pairs/pulsechain/0x7994d526A127979BcB9Ec7C98509BB5C7ebD78FD'
         );
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -63,7 +63,8 @@ const PairData = () => {
       // For small values, show more precision
       const precision = num < 0.01 ? 8 : 2;
       
-      return `$${formatUtils.formatNumber(num, precision)}`;
+      //return `$${formatUtils.formatNumber(num, precision)}`;
+      return `${formatUtils.formatNumber(num, precision)}`;
     },
 
     // Format percentages
@@ -310,7 +311,8 @@ const PairData = () => {
   
   // Calculate approximate past prices based on current price and price changes
   const calculatePastPrices = () => {
-    const currentPrice = parseFloat(pair.priceUsd);
+    //const currentPrice = parseFloat(pair.priceNative);
+    const currentPrice = pair.priceNative; 
     const priceChanges = pair.priceChange || {};
     
     // Generate more data points for a smoother chart
@@ -323,33 +325,33 @@ const PairData = () => {
       for (let i = 0; i <= 24; i += 3) {
         const adjustedChange = (h24Change / 24) * (24 - i);
         pastPrices.push({
-          time: i === 0 ? 'now' : `${i}h ago`,
+          time: i === 0 ? `24h ago`: 'now',
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
-      pastPrices.reverse();
+      //pastPrices.reverse();
     } else if (timeframe === '6h') {
       // Create points for 6h chart
       const h6Change = priceChanges.h6 || 0;
       for (let i = 0; i <= 6; i++) {
         const adjustedChange = (h6Change / 6) * (6 - i);
         pastPrices.push({
-          time: i === 0 ? 'now' : `${i}h ago`,
+          time: i === 0 ? `6h ago` : 'now' ,
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
-      pastPrices.reverse();
+      //pastPrices.reverse();
     } else if (timeframe === '1h') {
       // Create points for 1h chart (5-minute intervals)
       const h1Change = priceChanges.h1 || 0;
       for (let i = 0; i <= 60; i += 10) {
         const adjustedChange = (h1Change / 60) * (60 - i);
         pastPrices.push({
-          time: i === 0 ? 'now' : `${i}m ago`,
+          time: i === 0 ?  `1h ago` : 'now' ,
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
-      pastPrices.reverse();
+      //pastPrices.reverse();
     }
     
     return pastPrices;
@@ -403,7 +405,8 @@ const PairData = () => {
         displayColors: false,
         callbacks: {
           label: function(context) {
-            return `Price: ${formatUtils.formatUSD(context.raw)}`;
+            //return `Price: ${formatUtils.formatUSD(context.raw)}`;
+            return `Price: ${context.raw}`;
           }
         }
       }
@@ -425,40 +428,13 @@ const PairData = () => {
           color: 'rgba(255, 255, 255, 0.7)',
           callback: function(value) {
             return formatUtils.formatUSD(value);
+            //return value;
           }
         }
       }
     }
   };
 
-  const handleWrap = () => {
-    console.log(`Wrapping ${wrapAmount} PLS`);
-    alert(`Wrap function would be implemented here for ${wrapAmount} PLS`);
-  };
-
-  const handleUnwrap = () => {
-    console.log(`Unwrapping ${unwrapAmount} WPLS`);
-    alert(`Unwrap function would be implemented here for ${unwrapAmount} WPLS`);
-  };
-
-  // Network selection component
-  const NetworkSelector = () => (
-    <div style={styles.networkSelector}>
-      <div style={styles.networkOption}>
-        <span style={{ fontSize: '20px' }}>⚫</span>
-        <span>Ethereum</span>
-        <span>▼</span>
-      </div>
-      <div style={styles.networkOption}>
-        <span style={{ fontSize: '20px' }}>🟡</span>
-        <span>0x28...5A2f</span>
-        <span>▼</span>
-      </div>
-      <div style={styles.refreshButton}>
-        <span>🔄</span>
-      </div>
-    </div>
-  );
 
   // Component for displaying a stat item
   const StatItem = ({ label, value }) => (
