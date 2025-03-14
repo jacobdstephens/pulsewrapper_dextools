@@ -325,7 +325,7 @@ const PairData = () => {
       for (let i = 0; i <= 24; i += 3) {
         const adjustedChange = (h24Change / 24) * (24 - i);
         pastPrices.push({
-          time: i === 0 ? `24h ago`: 'now',
+          time: i === 24 ? 'now' : `${24 - i}h ago`,
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
@@ -336,7 +336,7 @@ const PairData = () => {
       for (let i = 0; i <= 6; i++) {
         const adjustedChange = (h6Change / 6) * (6 - i);
         pastPrices.push({
-          time: i === 0 ? `6h ago` : 'now' ,
+          time: i === 6 ? 'now' : `${6 - i}h ago`,
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
@@ -347,7 +347,7 @@ const PairData = () => {
       for (let i = 0; i <= 60; i += 10) {
         const adjustedChange = (h1Change / 60) * (60 - i);
         pastPrices.push({
-          time: i === 0 ?  `1h ago` : 'now' ,
+          time: i === 60 ? 'now' : `${60 - i}m ago`,
           price: currentPrice / (1 + adjustedChange / 100)
         });
       }
